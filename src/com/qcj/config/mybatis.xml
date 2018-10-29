@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--属性配置和加载外部属性文件-->
+    <properties resource="com/qcj/config/jdbc.properties"></properties>
+
+    <!-- 配置类型别名-->
+    <typeAliases>
+        <!--设置单一别名-->
+        <!--<typeAlias type="com.qcj.pojo.UserInfos" alias="user"/>-->
+        <!--批量起别名:包名下所有别名是类名-->
+        <package name="com.qcj.pojo"/>
+    </typeAliases>
+
+    <!-- 环境 -->
+    <environments default="development">
+        <!-- 具体环境： id:当前环境的唯一标示 可以配置多个数据库-->
+        <environment id="development">
+            <!-- 事务管理器 type:类型 -->
+            <transactionManager type="JDBC"/>
+            <!-- 数据源： type:POOLED -->
+            <dataSource type="POOLED">
+                <!-- 获取连接的四个参数 -->
+                <property name="driver" value="${mysqlDriver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <!-- 映射器 -->
+    <mappers>
+        <!--映射文件的位置-->
+        <!--单个映射文件的加载-->
+        <mapper resource="com/qcj/config/UserInfosMapper.xml"/>
+        <!--批量加载映射文件：mapper接口和mapper映射文件必须同包同名-->
+        <!--<package name=""/>-->
+    </mappers>
+</configuration>

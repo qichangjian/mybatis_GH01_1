@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace：命名空间（隔离sql）名字随便起-->
+<mapper namespace="abcd">
+
+    <!--
+        select/update/insert/delete 都是一个PreparedStatement jdbc中的ps sql
+        1.#{}:占位符
+            关键字和输入参数有关
+             简单类型（String,基本类型）：关键字可任意
+        2.id:标签的唯一标示
+        3.parameterType：参数类型（可选）
+        4.resultType：返回结果的类型，（结果集的封装）必须为userinfos实体的全限定名称
+    -->
+    <select id="selectUserInfos" resultType="UserInfos">
+    select * from userinfos where uid = #{uid}
+    </select>
+
+    <!--查询所有的userInfos resultType封装的list中的类型 调用的时候用selectlist-->
+    <select id="selectAll" resultType="com.qcj.pojo.UserInfos">
+        select * from userinfos
+    </select>
+
+    <!--模糊查询：查询名称中包含2的信息
+            #{}：占位符
+            ${}:代表连接符号
+                关键字和输入参数有关
+                    简单类型：必须使用value
+        -->
+    <select id="selectLikeName" resultType="com.qcj.pojo.UserInfos">
+        select * from userinfos where uname like '%${value}%'
+    </select>
+
+    <update id="updateUserInfosById">
+        update userinfos set uname = #{uname},password = #{password} where uid = #{uid}
+    </update>
+
+    <!--插入：
+         parameterType：可以不写
+         不需要返回参数
+         #{}占位符：
+            简单类型可以随便写
+            对象类型：写属性名称
+
+        默认情况下：事务自动提交关了。
+            1.手动提交
+            2.开启事务自动提交
+         -->
+    <insert id="insertUserInfos">
+        insert into userinfos(uname,password) values(#{uname},#{password});
+    </insert>
+
+    <delete id="deleteUserInfos">
+        delete from userinfos where uid = #{uid}
+    </delete>
+</mapper>
